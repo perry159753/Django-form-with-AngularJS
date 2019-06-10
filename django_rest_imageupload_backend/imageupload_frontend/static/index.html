@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <!-- Include Angular and several angular libraries -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+     <script src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+    <script src="js/filesModelDirective.js"></script>
+    <!-- Include our app -->
+    <script src="js/app.js"></script>
+    <script src="js/images.rest.js"></script>
+
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+     <div ng-app="imageuploadFrontendApp" ng-controller="MainCtrl">
+         <center><h1>ScrapShut Project</h1><br/><h5>~By Parth Shah</h5><center>
+         <div class="panel panel-default">
+             <div class = "panel-body">
+                 <form class="form" name="form" ng-submit="uploadImage()">
+                    <div class="form-group">
+                         <label for="inputFile">Select image:</label>
+                          <input id="inputFile" class="form-control" type="file" files-model="newImage.image">
+                     </div>
+
+                     <div class="form-group">
+                         <label for="inputFile">Select video:</label>
+                          <input id="inputFile" class="form-control" type="file" files-model="newImage.videofile">
+                     </div>
+
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" class="form-control" ng-model="newImage.name">
+                    </div>
+
+                     <div class="form-group">
+                        <label for="emailid">Email:</label>
+                         <input type="text" id="emailid" class="form-control" ng-model="newImage.emailid">
+                    </div>
+
+                     <div class="form-group">
+                         <label for="number">Number:</label>
+                         <input type="text" id="number" class="form-control" ng-model="newImage.number">
+                    </div>
+
+                     <div class="form-group">
+                          <label for="branch">Branch:</label>
+                         <select id="branch" class="form-control" ng-model="newImage.branch">
+                         <option value ="cse">CSE</option>
+                         <option value ="it">IT</option>
+                    </select>
+                     </div>
+                     <button type="submit" class="btn btn-primary">
+                         Upload
+                     </button>
+                 </form>
+             </div>
+         </div>
+
+         <div ng-if="images.length == 0">
+            There are no data available yet. Why don't you go ahead and upload one?
+        </div>
+
+         <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" ng-repeat="image in images track by image.pk">
+            <h3>{{image.name}}
+                <button class="btn btn-warning" ng-click="deleteImage(image)">Delete</button>
+            </h3>
+            <img ng-if="image.thumbnail" ng-src="{{ image.thumbnail }}" height="256" width="256">
+            <img ng-if="!image.thumbnail" ng-src="{{ image.image }}" height="300" width="300">
+            <video height="300" width='400' controls ng-src="{{ image.videofile }}">
+                Your browser does not support the video tag.
+            </video>
+                <p>{{image.emailid}}</p>
+                <p>{{image.number}}</p>
+                <p>{{image.branch}}</p>
+        </div>
+         </div>
+     </div>
+</body>
+</html>
